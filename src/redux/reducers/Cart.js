@@ -3,6 +3,7 @@ import {
    CART_REMOVE_ITEM,
    REMOVE_ALL_CART_ITEMS,
    SAVE_SHIPPING_ADDRESS,
+   SAVE_PAYMENT_METHOD,
 } from '../actions/actionTypes'
 
 export const cartReducer = (state = { cartItems: [], shippingAddress: {} }, action) => {
@@ -35,12 +36,15 @@ export const cartReducer = (state = { cartItems: [], shippingAddress: {} }, acti
             cartItems: [],
          }
       case SAVE_SHIPPING_ADDRESS:
-         console.log(state);
          return {
             ...state,
             shippingAddress: payload,
          }
-
+      case SAVE_PAYMENT_METHOD:
+         return {
+            ...state,
+            paymentMethod: payload,
+         }
       default:
          return state
    }
