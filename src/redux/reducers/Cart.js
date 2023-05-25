@@ -1,6 +1,11 @@
-import { CART_ADD_ITEM, CART_REMOVE_ITEM, REMOVE_ALL_CART_ITEMS } from '../actions/actionTypes'
+import {
+   CART_ADD_ITEM,
+   CART_REMOVE_ITEM,
+   REMOVE_ALL_CART_ITEMS,
+   SAVE_SHIPPING_ADDRESS,
+} from '../actions/actionTypes'
 
-export const cartReducer = (state = { cartItems: [] }, action) => {
+export const cartReducer = (state = { cartItems: [], shippingAddress: {} }, action) => {
    const { type, payload } = action
 
    switch (type) {
@@ -29,6 +34,13 @@ export const cartReducer = (state = { cartItems: [] }, action) => {
             ...state,
             cartItems: [],
          }
+      case SAVE_SHIPPING_ADDRESS:
+         console.log(state);
+         return {
+            ...state,
+            shippingAddress: payload,
+         }
+
       default:
          return state
    }

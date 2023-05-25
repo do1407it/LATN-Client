@@ -4,7 +4,12 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 
 import { getProductDetailsReducer, getProductListReducer } from './reducers/Product'
 import { cartReducer } from './reducers/Cart'
-import { userLoginReducer, registerUserReducer } from './reducers/User'
+import {
+   userLoginReducer,
+   registerUserReducer,
+   userDetailsReducer,
+   updateUserProfileReducer,
+} from './reducers/User'
 
 const reducer = combineReducers({
    productList: getProductListReducer,
@@ -12,6 +17,8 @@ const reducer = combineReducers({
    cart: cartReducer,
    userLogin: userLoginReducer,
    userRegister: registerUserReducer,
+   userDetails: userDetailsReducer,
+   userUpdateProfile: updateUserProfileReducer,
 })
 
 // Local Storage
@@ -23,8 +30,12 @@ const userInfoFromStorage = localStorage.getItem('userInfo')
    ? JSON.parse(localStorage.getItem('userInfo'))
    : null
 
+const shippingAddressLocalStorage = localStorage.getItem('shippingAddress')
+   ? JSON.parse(localStorage.getItem('shippingAddress'))
+   : {}
+
 const initialState = {
-   cart: { cartItems: cartItemsFromStorage },
+   cart: { cartItems: cartItemsFromStorage, shippingAddress: shippingAddressLocalStorage },
    userLogin: { userInfo: userInfoFromStorage },
 }
 const middeware = [thunk]
