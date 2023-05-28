@@ -1,14 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Header from './../components/Header'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { createOrder } from './../redux/actions/OrderActions'
+import Message from '../components/LoadingError/Error'
 
-const PlaceOrderScreen = () => {
+const PlaceOrderScreen = ({ history }) => {
    window.scrollTo(0, 0)
+   const dispatch = useDispatch()
    const cart = useSelector((state) => state.cart)
    const { cartItems, shippingAddress, paymentMethod } = cart
    const { userInfo } = useSelector((state) => state.userLogin)
-
+   const { order, success, error } = useSelector((state) => state.orderCreate)
+   console.log(order)
    //Calculate Price
    const addDecimals = (num) => {
       return (Math.round(num * 100) / 100).toFixed(2)
@@ -22,8 +26,17 @@ const PlaceOrderScreen = () => {
    cart.taxPrice = addDecimals(Number((0.2 * cart.itemsPrice).toFixed(2)))
    cart.totalPrice = Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)
 
-   const placeOrderHandler = (e) => { 
+   useEffect(() => {
+      if (!userInfo) {
+         history.push('/login')
+      }
+      if (success) {
+         history.push(`/order/${order._id}`)
+      }
+   }, [dispatch, history, userInfo, success, order, cart])
+   const placeOrderHandler = (e) => {
       e.preventDefault()
+      dispatch(createOrder({ ...cart, orderItems: cart.cartItems }))
    }
 
    return (
@@ -92,7 +105,7 @@ const PlaceOrderScreen = () => {
                   {cartItems.length === 0
                      ? 'Your cart is empty'
                      : cartItems.map((item, index) => (
-                          <div className='order-product row'>
+                          <div key={index} className='order-product row'>
                              <div className='col-md-3 col-6'>
                                 <img src={item.image} alt={item.name} />
                              </div>
@@ -146,14 +159,17 @@ const PlaceOrderScreen = () => {
                         </tr>
                      </tbody>
                   </table>
-                  <button type='submit' onClick={placeOrderHandler}>
-                     <Link to='/order' className='text-white'>
+                  {cartItems.length === 0 ? null : (
+                     <button type='submit' onClick={placeOrderHandler}>
                         PLACE ORDER
-                     </Link>
-                  </button>
-                  {/* <div className="my-3 col-12">
-                <Message variant="alert-danger">{error}</Message>
-              </div> */}
+                     </button>
+                  )}
+
+                  {error && (
+                     <div className='my-3 col-12'>
+                        <Message variant='alert-danger'>{error}</Message>
+                     </div>
+                  )}
                </div>
             </div>
          </div>
