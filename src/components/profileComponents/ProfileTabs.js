@@ -11,7 +11,7 @@ const ProfileTabs = () => {
    const [email, setEmail] = useState('')
    const [password, setPassword] = useState('')
    const [confirmPassword, setConfirmPassword] = useState('')
-   const [phone, setPhone] = useState('')
+   // const [phone, setPhone] = useState('')
    const dispatch = useDispatch()
    const { user } = useSelector((state) => state.userDetails)
    const {
@@ -51,7 +51,7 @@ const ProfileTabs = () => {
          toastId.current = toast.error('Password does not match', Toastobjects)
          // }
       } else {
-         dispatch(updateUserProfile({ id: user._id, name, email, password, phone }))
+         dispatch(updateUserProfile({ id: user._id, name, email, password }))
       }
    }
    console.log(success)

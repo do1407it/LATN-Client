@@ -10,7 +10,7 @@ import {
    userDetailsReducer,
    updateUserProfileReducer,
 } from './reducers/User'
-import { orderCreateReducer } from './reducers/Orders'
+import { orderCreateReducer, orderDetailsReducer, orderPayReducer } from './reducers/Orders'
 
 const reducer = combineReducers({
    productList: getProductListReducer,
@@ -21,6 +21,8 @@ const reducer = combineReducers({
    userDetails: userDetailsReducer,
    userUpdateProfile: updateUserProfileReducer,
    orderCreate: orderCreateReducer,
+   orderDetails: orderDetailsReducer,
+   orderPay: orderPayReducer,
 })
 
 // Local Storage
@@ -38,7 +40,7 @@ const shippingAddressLocalStorage = localStorage.getItem('shippingAddress')
 
 const paymentMethodLocalStorage = localStorage.getItem('paymentMethod')
    ? JSON.parse(localStorage.getItem('paymentMethod'))
-   : ''
+   : 'PayPal'
 
 const initialState = {
    cart: {
