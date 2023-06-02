@@ -6,11 +6,11 @@ import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { useDispatch } from 'react-redux'
 import { logout } from '../redux/actions/UserActions'
 import { removeAllCartItems } from '../redux/actions/CartActions'
+import { useHistory } from 'react-router-dom'
 
 const Header = () => {
-   // eslint-disable-next-line no-unused-vars
    const [keyword, setKeyword] = useState()
-   
+   const history = useHistory()
    const dispatch = useDispatch()
    const { cartItems } = useSelector((state) => state.cart)
    const { userInfo } = useSelector((state) => state.userLogin)
@@ -20,11 +20,12 @@ const Header = () => {
    }
    const submitHandler = (e) => {
       e.preventDefault()
-      // if (keyword.trim()) {
-      //    history.push(`/search/${keyword}`)
-      // } else {
-      //    history.push('/')
-      // }
+
+      if (keyword) {
+         history.push(`/search/${keyword}`)
+      } else {
+         history.push('/')
+      }
    }
    return (
       <div>
@@ -145,11 +146,12 @@ const Header = () => {
                         </Link>
                      </div>
                      <div className='col-md-6 col-8 d-flex align-items-center'>
-                        <form className='input-group'>
+                        <form className='input-group' onSubmit={submitHandler}>
                            <input
                               type='search'
                               className='form-control rounded search'
                               placeholder='Search'
+                              onChange={(e) => setKeyword(e.target.value)}
                            />
                            <button type='submit' className='search-button'>
                               search

@@ -7,14 +7,13 @@ import { listProducts } from '../../redux/actions/ProductActions'
 import Message from '../LoadingError/Error'
 import Loading from '../LoadingError/Loading'
 
-const ShopSection = () => {
+const ShopSection = ({ keyword, pageNumber }) => {
    const dispatch = useDispatch()
-   const productList = useSelector((state) => state.productList)
-   const { loading, error, products } = productList
+   const { loading, error, products } = useSelector((state) => state.productList)
 
    useEffect(() => {
-      dispatch(listProducts())
-   }, [dispatch])
+      dispatch(listProducts(keyword, pageNumber))
+   }, [dispatch, keyword, pageNumber])
 
    return (
       <>
@@ -28,7 +27,7 @@ const ShopSection = () => {
                   <div className='row'>
                      <div className='col-lg-12 col-md-12 article'>
                         <div className='shopcontainer row'>
-                           {products.map((product) => (
+                           {products?.products.map((product) => (
                               <div className='shop col-lg-4 col-md-6 col-sm-6' key={product?._id}>
                                  <div className='border-product'>
                                     <Link to={`/products/${product?._id}`}>

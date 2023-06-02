@@ -16,7 +16,7 @@ const Register = ({ history, location }) => {
    const [email, setEmail] = useState('')
    const [password, setPassword] = useState('')
    const redirect = location.search ? location.search.split('=')[1] : '/'
-   console.log(redirect)
+
    const handleSubmit = (e) => {
       e.preventDefault()
       dispatch(register(username, email, password))
