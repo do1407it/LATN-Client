@@ -12,6 +12,7 @@ const Login = ({ location, history }) => {
    const [password, setPassword] = useState('')
    const dispatch = useDispatch()
    const redirect = location.search ? location.search.split('=')[1] : '/'
+   console.log(redirect)
    const userLogin = useSelector((state) => state.userLogin)
    const { loading, error, userInfo } = userLogin
 

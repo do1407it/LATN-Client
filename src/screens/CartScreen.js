@@ -9,7 +9,7 @@ const CartScreen = ({ match, location, history }) => {
    const { cartItems } = useSelector((state) => state.cart)
    const productId = match.params.id
    const qty = location.search ? Number(location.search.split('=')[1]) : 1
-   console.log(qty);
+
    const total = cartItems.reduce((acc, item) => acc + item.price * item.qty, 0) ?? 'N/A'
    
    useEffect(() => {

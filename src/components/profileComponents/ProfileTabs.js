@@ -54,7 +54,7 @@ const ProfileTabs = () => {
          dispatch(updateUserProfile({ id: user._id, name, email, password }))
       }
    }
-   console.log(success)
+
    return (
       <>
          <Toast />
