@@ -5,13 +5,16 @@ import Loading from '../LoadingError/Loading'
 import Toast from '../LoadingError/Toast'
 import { toast } from 'react-toastify'
 import { updateUserProfile } from '../../redux/actions/UserActions'
+import convertBase64 from '../../utils/converBase64'
 
 const ProfileTabs = () => {
    const [name, setName] = useState('')
    const [email, setEmail] = useState('')
+   const [phone, setPhone] = useState('')
+   const [url, setUrl] = useState('')
    const [password, setPassword] = useState('')
    const [confirmPassword, setConfirmPassword] = useState('')
-   // const [phone, setPhone] = useState('')
+
    const dispatch = useDispatch()
    const { user } = useSelector((state) => state.userDetails)
    const {
@@ -35,6 +38,7 @@ const ProfileTabs = () => {
       if (user) {
          setName(user.name ?? '')
          setEmail(user.email ?? '')
+         setPhone(user.phone ?? '')
       }
    }, [dispatch, user])
 
@@ -51,10 +55,14 @@ const ProfileTabs = () => {
          toastId.current = toast.error('Password does not match', Toastobjects)
          // }
       } else {
-         dispatch(updateUserProfile({ id: user._id, name, email, password }))
+         dispatch(updateUserProfile({ id: user._id, name, email, phone, image: url, password }))
       }
    }
-
+   const handleImageUpload = async (e) => {
+      const file = e.target.files[0]
+      const base64 = await convertBase64(file)
+      setUrl(base64)
+   }
    return (
       <>
          <Toast />
@@ -65,6 +73,7 @@ const ProfileTabs = () => {
                <div className='form'>
                   <label htmlFor='account-fn'>UserName</label>
                   <input
+                     id='account-fn'
                      className='form-control'
                      type='text'
                      value={name}
@@ -78,10 +87,24 @@ const ProfileTabs = () => {
                <div className='form'>
                   <label htmlFor='account-email'>E-mail Address</label>
                   <input
+                     id='account-email'
                      className='form-control'
                      type='email'
                      value={email}
                      onChange={(e) => setEmail(e.target.value)}
+                  />
+               </div>
+            </div>
+            <div className='col-md-12'>
+               <div className='form'>
+                  <label htmlFor='account-phone'>Phone</label>
+                  <input
+                     id='account-phone'
+                     className='form-control'
+                     type='text'
+                     value={phone}
+                     onChange={(e) => setPhone(e.target.value)}
+                     required
                   />
                </div>
             </div>
@@ -107,6 +130,13 @@ const ProfileTabs = () => {
                   />
                </div>
             </div>
+            {/* file */}
+            <input
+               className='form-control mt-3'
+               type='file'
+               required
+               onChange={handleImageUpload}
+            />
             <button type='submit'>Update Profile</button>
          </form>
       </>

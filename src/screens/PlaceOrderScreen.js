@@ -12,7 +12,7 @@ const PlaceOrderScreen = ({ history }) => {
    const { cartItems, shippingAddress, paymentMethod } = cart
    const { userInfo } = useSelector((state) => state.userLogin)
    const { order, success, error } = useSelector((state) => state.orderCreate)
-   console.log(order)
+
    //Calculate Price
    const addDecimals = (num) => {
       return (Math.round(num * 100) / 100).toFixed(2)
@@ -32,6 +32,7 @@ const PlaceOrderScreen = ({ history }) => {
       }
       if (success) {
          history.push(`/order/${order._id}`)
+         dispatch({ type: 'ORDER_CREATE_RESET' })
       }
    }, [dispatch, history, userInfo, success, order, cart])
    const placeOrderHandler = (e) => {
@@ -161,7 +162,7 @@ const PlaceOrderScreen = ({ history }) => {
                   </table>
                   {cartItems.length === 0 ? null : (
                      <button type='submit' onClick={placeOrderHandler}>
-                        PLACE ORDER
+                        Confirm order
                      </button>
                   )}
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import Loading from '../LoadingError/Loading'
 const Orders = ({ data, loading, error }) => {
-   console.log(data)
+
    return (
       <div className=' d-flex justify-content-center align-items-center flex-column'>
          {loading ? (

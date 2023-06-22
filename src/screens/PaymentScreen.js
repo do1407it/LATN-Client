@@ -8,7 +8,7 @@ const PaymentScreen = ({ history }) => {
    const ditpatch = useDispatch()
    const { shippingAddress } = useSelector((state) => state.cart)
    const [paymentMethod, setPaymentMethod] = useState('PayPal')
-
+   
    if (Object.keys(shippingAddress).length === 0) {
       history.push('/shipping')
    }
@@ -16,7 +16,7 @@ const PaymentScreen = ({ history }) => {
    const submitHandler = (e) => {
       e.preventDefault()
       ditpatch(savePaymentMethod(paymentMethod))
-      history.push('/payment')
+      history.push('/placeorder')
    }
    return (
       <>

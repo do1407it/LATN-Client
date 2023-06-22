@@ -12,14 +12,25 @@ import {
    ORDER_LIST_MY_REQUEST,
    ORDER_LIST_MY_SUCCESS,
    ORDER_LIST_MY_FAILURE,
+   COUNT_IN_STOCK_REQUEST,
+   COUNT_IN_STOCK_SUCCESS,
+   COUNT_IN_STOCK_FAILURE,
 } from './actionTypes'
 import { logout } from './UserActions'
 import { removeAllCartItems } from './CartActions'
 
+const countInStock = (cartItems, product) => {
+   const item = cartItems.find((item) => item.product === product)
+   if (item) {
+      return item.countInStock - item.qty
+   } else {
+      return product.countInStock
+   }
+}
+
 export const createOrder = (order) => async (dispatch, getState) => {
    try {
       dispatch({ type: ORDER_CREATE_REQUEST })
-
       const {
          userLogin: { userInfo },
       } = getState()
@@ -29,9 +40,10 @@ export const createOrder = (order) => async (dispatch, getState) => {
             Authorization: `Bearer ${userInfo.token}`,
          },
       }
-
       const { data } = await axios.post(`/api/orders`, order, config)
+
       dispatch({ type: ORDER_CREATE_SUCCESS, payload: data })
+
       dispatch(removeAllCartItems())
       localStorage.removeItem('cartItems')
    } catch (error) {
@@ -121,8 +133,7 @@ export const listMyOrders = () => async (dispatch, getState) => {
       const { data } = await axios.get(`/api/orders`, config)
 
       dispatch({ type: ORDER_LIST_MY_SUCCESS, payload: data })
-   } 
-   catch (error) {
+   } catch (error) {
       const message =
          error.response && error.response.data.message ? error.response.data.message : error.message
       if (message === 'Not authorized, token failed') {

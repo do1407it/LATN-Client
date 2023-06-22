@@ -16,7 +16,7 @@ const OrderScreen = ({ match }) => {
    const [sdkReady, setSdkReady] = useState(false)
    const { order, loading, error } = useSelector((state) => state.orderDetails)
    const { loading: loadingPay, success: successPay } = useSelector((state) => state.orderPay)
-   console.log(sdkReady)
+
    useEffect(() => {
       dispatch(getOrderDetails(orderId))
    }, [dispatch, orderId])
@@ -209,6 +209,7 @@ const OrderScreen = ({ match }) => {
                               </tr>
                            </tbody>
                         </table>
+
                         {!order.isPaid && (
                            <div className='col-12'>
                               {loadingPay && <Loading />}

@@ -13,6 +13,7 @@ const ProfileScreen = () => {
    window.scrollTo(0, 0)
    const dispatch = useDispatch()
    const { loading, userInfo, error } = useSelector((state) => state.userLogin)
+
    const {
       loading: loadingList,
       error: errorList,
@@ -39,7 +40,10 @@ const ProfileScreen = () => {
                         <div className='author-card-cover'></div>
                         <div className='author-card-profile row'>
                            <div className='author-card-avatar col-md-5'>
-                              <img src='./images/user.png' alt='userprofileimage' />
+                              <img
+                                 src={userInfo?.image ?? './images/user.png'}
+                                 alt='userprofileimage'
+                              />
                            </div>
                            <div className='author-card-details col-md-7'>
                               <h5 className='author-card-name mb-2'>

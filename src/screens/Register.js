@@ -14,12 +14,13 @@ const Register = ({ history, location }) => {
 
    const [username, setUsername] = useState('')
    const [email, setEmail] = useState('')
+   const [phone, setPhone] = useState('')
    const [password, setPassword] = useState('')
    const redirect = location.search ? location.search.split('=')[1] : '/'
 
    const handleSubmit = (e) => {
       e.preventDefault()
-      dispatch(register(username, email, password))
+      dispatch(register(username, email, phone, password))
    }
 
    useEffect(() => {
@@ -37,12 +38,23 @@ const Register = ({ history, location }) => {
             {error && <Message variant='alert-danger'>{error}</Message>}
             {loading && <Loading />}
             <form className='Login col-md-8 col-lg-4 col-11' onSubmit={handleSubmit}>
+               <div className='author-card-profile row'>
+                  <div className='author-card-avatar col-md-12'>
+                     <img src='./images/user.png' alt='userprofileimage' />
+                  </div>
+               </div>
+               
+               <h5 className='author-card-name mb-2'>
+                  <strong>Register</strong>
+               </h5>
+
                <input
                   type='text'
                   placeholder='Username'
                   onChange={(e) => setUsername(e.target.value)}
                />
                <input type='email' placeholder='Email' onChange={(e) => setEmail(e.target.value)} />
+               <input type='text' placeholder='Phone' onChange={(e) => setPhone(e.target.value)} />
                <input
                   type='password'
                   placeholder='Password'
