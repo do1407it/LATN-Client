@@ -13,7 +13,7 @@ import {
 import { logout } from './UserActions'
 
 export const listProducts =
-   (keyword = '', pageNumber = 1) =>
+   (keyword = '', pageNumber = 1, category = '') =>
    async (dispatch) => {
       try {
          dispatch({
@@ -21,7 +21,7 @@ export const listProducts =
          })
 
          const { data } = await axios.get(
-            `/api/products?keyword=${keyword}&pageNumber=${pageNumber}`
+            `/api/products?keyword=${keyword}&pageNumber=${pageNumber}&category=${category}`
          )
 
          dispatch({
@@ -89,5 +89,3 @@ export const productReview = (productId, review) => async (dispatch, getState) =
       })
    }
 }
-
-

@@ -14,7 +14,6 @@ import {
    ORDER_LIST_MY_FAILURE,
    MAIL_SEND_REQUEST,
    MAIL_SEND_SUCCESS,
-   MAIL_SEND_FAILURE,
 } from './actionTypes'
 import { logout } from './UserActions'
 import { removeAllCartItems } from './CartActions'

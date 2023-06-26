@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Rating from './Rating'
 import Pagination from './pagination'
@@ -6,18 +6,39 @@ import { useDispatch, useSelector } from 'react-redux'
 import { listProducts } from '../../redux/actions/ProductActions'
 import Message from '../LoadingError/Error'
 import Loading from '../LoadingError/Loading'
+import { listCategories } from '../../redux/actions/CategoryActions'
 
 const ShopSection = ({ keyword, pageNumber }) => {
    const dispatch = useDispatch()
+   const [category, setCategory] = useState('')
+
    const { loading, error, products } = useSelector((state) => state.productList)
+   const { categories } = useSelector((state) => state.categoryList)
 
    useEffect(() => {
-      dispatch(listProducts(keyword, pageNumber))
-   }, [dispatch, keyword, pageNumber])
+      dispatch(listProducts(keyword, pageNumber, category))
+      dispatch(listCategories())
+   }, [dispatch, keyword, pageNumber, category])
 
    return (
       <>
          <div className='container'>
+            <div className='col-lg-6 col-md-6 article'>
+               <select
+                  className='form-select'
+                  aria-label='Default select example'
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+               >
+                  <option value=''>All Category</option>
+                  {categories &&
+                     categories.map((category) => (
+                        <option key={category._id} value={category._id}>
+                           {category.title}
+                        </option>
+                     ))}
+               </select>
+            </div>
             {loading ? (
                <Loading />
             ) : error ? (

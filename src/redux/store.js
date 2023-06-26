@@ -23,19 +23,27 @@ import {
    sendMailReducer,
 } from './reducers/Orders'
 
+import { categoryListReducer } from './reducers/Category'
+
 const reducer = combineReducers({
    productList: getProductListReducer,
    productDetail: getProductDetailsReducer,
    productReview: productReviewReducer,
+
+   categoryList: categoryListReducer,
+
    cart: cartReducer,
+
    userLogin: userLoginReducer,
    userRegister: registerUserReducer,
    userDetails: userDetailsReducer,
    userUpdateProfile: updateUserProfileReducer,
+
    orderCreate: orderCreateReducer,
    orderDetails: orderDetailsReducer,
    orderPay: orderPayReducer,
    orderListMy: orderListMyReducer,
+
    sendMail: sendMailReducer,
 })
 
