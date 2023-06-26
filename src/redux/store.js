@@ -20,6 +20,7 @@ import {
    orderDetailsReducer,
    orderPayReducer,
    orderListMyReducer,
+   sendMailReducer,
 } from './reducers/Orders'
 
 const reducer = combineReducers({
@@ -35,6 +36,7 @@ const reducer = combineReducers({
    orderDetails: orderDetailsReducer,
    orderPay: orderPayReducer,
    orderListMy: orderListMyReducer,
+   sendMail: sendMailReducer,
 })
 
 // Local Storage

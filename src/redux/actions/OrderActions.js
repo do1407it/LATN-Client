@@ -12,21 +12,12 @@ import {
    ORDER_LIST_MY_REQUEST,
    ORDER_LIST_MY_SUCCESS,
    ORDER_LIST_MY_FAILURE,
-   COUNT_IN_STOCK_REQUEST,
-   COUNT_IN_STOCK_SUCCESS,
-   COUNT_IN_STOCK_FAILURE,
+   MAIL_SEND_REQUEST,
+   MAIL_SEND_SUCCESS,
+   MAIL_SEND_FAILURE,
 } from './actionTypes'
 import { logout } from './UserActions'
 import { removeAllCartItems } from './CartActions'
-
-const countInStock = (cartItems, product) => {
-   const item = cartItems.find((item) => item.product === product)
-   if (item) {
-      return item.countInStock - item.qty
-   } else {
-      return product.countInStock
-   }
-}
 
 export const createOrder = (order) => async (dispatch, getState) => {
    try {
@@ -43,6 +34,13 @@ export const createOrder = (order) => async (dispatch, getState) => {
       const { data } = await axios.post(`/api/orders`, order, config)
 
       dispatch({ type: ORDER_CREATE_SUCCESS, payload: data })
+      dispatch({ type: MAIL_SEND_REQUEST })
+      const { data: mailData } = await axios.post(
+         `/api/orders/sendmail`,
+         { name: userInfo?.name, email: userInfo?.email, message: 'Confirm order', order: data },
+         config
+      )
+      dispatch({ type: MAIL_SEND_SUCCESS, payload: mailData })
 
       dispatch(removeAllCartItems())
       localStorage.removeItem('cartItems')

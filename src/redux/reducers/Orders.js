@@ -14,6 +14,9 @@ import {
    ORDER_LIST_MY_SUCCESS,
    ORDER_LIST_MY_FAILURE,
    ORDER_LIST_MY_RESET,
+   MAIL_SEND_REQUEST,
+   MAIL_SEND_SUCCESS,
+   MAIL_SEND_FAILURE,
 } from '../actions/actionTypes'
 
 export const orderCreateReducer = (state = { user: {} }, action) => {
@@ -76,6 +79,20 @@ export const orderListMyReducer = (state = { orders: [] }, action) => {
          return { loading: false, error: payload }
       case ORDER_LIST_MY_RESET:
          return { orders: [] }
+      default:
+         return state
+   }
+}
+
+export const sendMailReducer = (state = {}, action) => {
+   const { type, payload } = action
+   switch (type) {
+      case MAIL_SEND_REQUEST:
+         return { loading: true }
+      case MAIL_SEND_SUCCESS:
+         return { loading: false, success: true }
+      case MAIL_SEND_FAILURE:
+         return { loading: false, error: payload }
       default:
          return state
    }
