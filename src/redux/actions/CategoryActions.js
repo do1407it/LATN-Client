@@ -4,16 +4,8 @@ import { CATEGORY_LIST_REQUEST, CATEGORY_LIST_SUCCESS, CATEGORY_LIST_FAILURE } f
 export const listCategories = () => async (dispatch, getState) => {
    try {
       dispatch({ type: CATEGORY_LIST_REQUEST })
-      const {
-         userLogin: { userInfo },
-      } = getState()
-      const config = {
-         headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${userInfo.token}`,
-         },
-      }
-      const { data } = await axios.get('/api/category', config)
+
+      const { data } = await axios.get('/api/category')
 
       dispatch({ type: CATEGORY_LIST_SUCCESS, payload: data })
    } catch (error) {

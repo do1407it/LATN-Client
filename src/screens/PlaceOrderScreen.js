@@ -4,6 +4,7 @@ import Header from './../components/Header'
 import { useSelector, useDispatch } from 'react-redux'
 import { createOrder } from './../redux/actions/OrderActions'
 import Message from '../components/LoadingError/Error'
+import DiscountSreen from './DiscountScreen'
 
 const PlaceOrderScreen = ({ history }) => {
    window.scrollTo(0, 0)
@@ -12,6 +13,7 @@ const PlaceOrderScreen = ({ history }) => {
    const { cartItems, shippingAddress, paymentMethod } = cart
    const { userInfo } = useSelector((state) => state.userLogin)
    const { order, success, error } = useSelector((state) => state.orderCreate)
+   const { coupon } = useSelector((state) => state.applyCoupon)
 
    //Calculate Price
    const addDecimals = (num) => {
@@ -24,7 +26,11 @@ const PlaceOrderScreen = ({ history }) => {
 
    cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 30)
    cart.taxPrice = addDecimals(Number((0.2 * cart.itemsPrice).toFixed(2)))
-   cart.totalPrice = Number(cart.itemsPrice) + Number(cart.shippingPrice) + Number(cart.taxPrice)
+   cart.totalPrice =
+      Number(cart.itemsPrice ?? 0) +
+      Number(cart.shippingPrice ?? 0) +
+      Number(cart.taxPrice ?? 0) -
+      Number(coupon?.discount ? cart.itemsPrice * (coupon.discount / 100) : 0)
 
    useEffect(() => {
       if (!userInfo) {
@@ -35,15 +41,18 @@ const PlaceOrderScreen = ({ history }) => {
          dispatch({ type: 'ORDER_CREATE_RESET' })
       }
    }, [dispatch, history, userInfo, success, order, cart])
+
    const placeOrderHandler = (e) => {
       e.preventDefault()
-      dispatch(createOrder({ ...cart, orderItems: cart.cartItems }))
+      dispatch(createOrder({ ...cart, orderItems: cart.cartItems, coupon: coupon?._id }))
    }
 
    return (
       <>
          <Header />
          <div className='container'>
+            {cartItems.length > 0 && <DiscountSreen />}
+
             <div className='row  order-detail'>
                <div className='col-lg-4 col-sm-4 mb-lg-4 mb-5 mb-sm-0'>
                   <div className='row '>
@@ -92,9 +101,9 @@ const PlaceOrderScreen = ({ history }) => {
                         </h5>
                         <p>
                            Address: {shippingAddress?.city ?? 'N/A'},
-                           {shippingAddress?.country ?? 'N/A'},{' '}
-                           {shippingAddress?.postalCode ?? 'N/A'}
+                           {shippingAddress?.country ?? 'N/A'}
                         </p>
+                        <p>Code: {shippingAddress?.postalCode ?? 'N/A'}</p>
                      </div>
                   </div>
                </div>
@@ -131,6 +140,7 @@ const PlaceOrderScreen = ({ history }) => {
                        ))}
                </div>
                {/* total */}
+
                <div className='col-lg-3 d-flex align-items-end flex-column mt-5 subtotal-order'>
                   <table className='table table-bordered'>
                      <tbody>
@@ -138,25 +148,31 @@ const PlaceOrderScreen = ({ history }) => {
                            <td>
                               <strong>Products</strong>
                            </td>
-                           <td>${cart.itemsPrice}</td>
+                           <td>${cart?.itemsPrice}</td>
                         </tr>
                         <tr>
                            <td>
                               <strong>Shipping</strong>
                            </td>
-                           <td>${cart.shippingPrice}</td>
+                           <td>${cart?.shippingPrice}</td>
                         </tr>
                         <tr>
                            <td>
                               <strong>Tax</strong>
                            </td>
-                           <td>${cart.taxPrice}</td>
+                           <td>${cart?.taxPrice}</td>
+                        </tr>
+                        <tr>
+                           <td>
+                              <strong>Discount</strong>
+                           </td>
+                           <td>{coupon?.code}</td>
                         </tr>
                         <tr>
                            <td>
                               <strong>Total</strong>
                            </td>
-                           <td>${cart.totalPrice}</td>
+                           <td>${cart?.totalPrice}</td>
                         </tr>
                      </tbody>
                   </table>

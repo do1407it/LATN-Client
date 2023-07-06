@@ -14,7 +14,7 @@ const ShopSection = ({ keyword, pageNumber }) => {
 
    const { loading, error, products } = useSelector((state) => state.productList)
    const { categories } = useSelector((state) => state.categoryList)
-
+   console.log(products)
    useEffect(() => {
       dispatch(listProducts(keyword, pageNumber, category))
       dispatch(listCategories())
@@ -50,25 +50,33 @@ const ShopSection = ({ keyword, pageNumber }) => {
                         <div className='shopcontainer row'>
                            {products?.products.map((product) => (
                               <div className='shop col-lg-4 col-md-6 col-sm-6' key={product?._id}>
-                                 <div className='border-product'>
-                                    <Link to={`/products/${product?._id}`}>
+                                 <Link to={`/products/${product?._id}`}>
+                                    <div className='border-product'>
                                        <div className='shopBack'>
                                           <img src={product?.image} alt={product?.name} />
                                        </div>
-                                    </Link>
-                                    <div className='shoptext'>
-                                       <p>
-                                          <Link to={`/products/${product?._id}`}>
-                                             {product?.name}
-                                          </Link>
-                                       </p>
-                                       <Rating
-                                          value={product?.rating}
-                                          text={`${product?.numReviews} reviews`}
-                                       />
-                                       <h3>${product?.price}</h3>
+                                       <div className='shoptext'>
+                                          <p>
+                                             <Link to={`/products/${product?._id}`}>
+                                                {product?.name.length > 40
+                                                   ? product?.name.substring(0, 40) + '...'
+                                                   : product?.name}
+                                             </Link>
+                                          </p>
+                                          <Rating
+                                             value={product?.rating}
+                                             text={`${product?.numReviews} reviews`}
+                                          />
+                                          <b>
+                                             countInStock:{' '}
+                                             <span style={{ color: 'red' }}>
+                                                {product?.countInStock}
+                                             </span>
+                                          </b>
+                                          <h3>${product?.price}</h3>
+                                       </div>
                                     </div>
-                                 </div>
+                                 </Link>
                               </div>
                            ))}
                            {/* Pagination */}

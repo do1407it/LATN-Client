@@ -199,8 +199,8 @@ textarea:focus {
 /* NEWSLATTER */
 .subscribe-section {
    background: linear-gradient(0deg, rgba(0, 0, 0, 0.226), rgba(0, 0, 0, 0.226)),
-      url('https://cdn.acfc.com.vn/media/Brand_Page/Nike/BANNER_L_N-RUNNING.webp') no-repeat
-         scroll center / cover;
+      url('https://cdn.acfc.com.vn/media/Brand_Page/Nike/BANNER_L_N-RUNNING.webp') no-repeat scroll
+         center / cover;
    padding: 150px 0 100px;
 }
 .subscribe-head h2 {
@@ -436,7 +436,7 @@ textarea:focus {
    border-top: 1px solid #e4e4e4;
 }
 .wizard .nav .active {
-   background-color: #e5fee9;
+   background-color: #f0f8ff;
    color: black;
 }
 .badge2 {
@@ -461,7 +461,7 @@ textarea:focus {
 .form input {
    padding: 20px 10px;
    font-size: 17px;
-   background-color: #e5fee9;
+   background-color: #f0f8ff;
 }
 .form-container button {
    padding: 15px 0;
@@ -602,7 +602,7 @@ textarea:focus {
 }
 .order-detail {
    padding: 30px 0;
-   background-color: #e5fee9;
+   background-color: #f0f8ff;
 }
 .order-detail h5 {
    margin-bottom: 6px;

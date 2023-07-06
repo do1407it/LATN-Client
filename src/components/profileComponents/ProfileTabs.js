@@ -69,7 +69,7 @@ const ProfileTabs = () => {
          {loadingUpdate && <Loading />}
          {errorUpdate && <Message variant='alert-danger'>{errorUpdate}</Message>}
          <form className='row  form-container' onSubmit={submitHandler}>
-            <div className='col-md-6'>
+            <div className='col-md-12'>
                <div className='form'>
                   <label htmlFor='account-fn'>UserName</label>
                   <input
@@ -83,7 +83,7 @@ const ProfileTabs = () => {
                </div>
             </div>
 
-            <div className='col-md-6'>
+            <div className='col-md-12'>
                <div className='form'>
                   <label htmlFor='account-email'>E-mail Address</label>
                   <input

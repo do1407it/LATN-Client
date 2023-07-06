@@ -1,21 +1,25 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Header from './../components/Header'
 import { useDispatch, useSelector } from 'react-redux'
 import { savePaymentMethod } from './../redux/actions/CartActions'
 const PaymentScreen = ({ history }) => {
    window.scrollTo(0, 0)
-   const ditpatch = useDispatch()
+   const dispatch = useDispatch()
    const { shippingAddress } = useSelector((state) => state.cart)
    const [paymentMethod, setPaymentMethod] = useState('PayPal')
-   
+
    if (Object.keys(shippingAddress).length === 0) {
       history.push('/shipping')
    }
 
+   useEffect(() => {
+      dispatch({ type: 'COUPON_APPLY_RESET' })
+   }, [dispatch])
+
    const submitHandler = (e) => {
       e.preventDefault()
-      ditpatch(savePaymentMethod(paymentMethod))
+      dispatch(savePaymentMethod(paymentMethod))
       history.push('/placeorder')
    }
    return (

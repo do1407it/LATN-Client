@@ -66,7 +66,7 @@ const Header = () => {
                      <div className='row '>
                         <div className='col-6 d-flex align-items-center'>
                            <Link className='navbar-brand' to='/'>
-                              <img alt='logo' src='/images/LogoSneaker.png' />
+                              <img alt='logo' src='/images/logo.png' />
                            </Link>
                         </div>
                         <div className='col-6 d-flex align-items-center justify-content-end Login-Register'>

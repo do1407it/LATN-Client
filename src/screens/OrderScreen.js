@@ -203,7 +203,7 @@ const OrderScreen = ({ match }) => {
                               </tr>
                               <tr>
                                  <td>
-                                    <strong>Totall</strong>
+                                    <strong>Totalll</strong>
                                  </td>
                                  <td>${order?.totalPrice}</td>
                               </tr>

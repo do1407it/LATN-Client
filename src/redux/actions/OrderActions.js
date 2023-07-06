@@ -14,6 +14,7 @@ import {
    ORDER_LIST_MY_FAILURE,
    MAIL_SEND_REQUEST,
    MAIL_SEND_SUCCESS,
+   MAIL_SEND_FAILURE,
 } from './actionTypes'
 import { logout } from './UserActions'
 import { removeAllCartItems } from './CartActions'
@@ -21,9 +22,11 @@ import { removeAllCartItems } from './CartActions'
 export const createOrder = (order) => async (dispatch, getState) => {
    try {
       dispatch({ type: ORDER_CREATE_REQUEST })
+
       const {
          userLogin: { userInfo },
       } = getState()
+
       const config = {
          headers: {
             'Content-Type': 'application/json',
@@ -33,13 +36,10 @@ export const createOrder = (order) => async (dispatch, getState) => {
       const { data } = await axios.post(`/api/orders`, order, config)
 
       dispatch({ type: ORDER_CREATE_SUCCESS, payload: data })
+
+      // Send mail
       dispatch({ type: MAIL_SEND_REQUEST })
-      const { data: mailData } = await axios.post(
-         `/api/orders/sendmail`,
-         { name: userInfo?.name, email: userInfo?.email, message: 'Confirm order', order: data },
-         config
-      )
-      dispatch({ type: MAIL_SEND_SUCCESS, payload: mailData })
+      await sendMail(dispatch, userInfo, data, config)
 
       dispatch(removeAllCartItems())
       localStorage.removeItem('cartItems')
@@ -140,5 +140,24 @@ export const listMyOrders = () => async (dispatch, getState) => {
          type: ORDER_LIST_MY_FAILURE,
          payload: message,
       })
+   }
+}
+
+const sendMail = async (dispatch, userInfo, orderData, config) => {
+   try {
+      const { data } = await axios.post(
+         `/api/orders/sendmail`,
+         {
+            name: userInfo?.name,
+            email: userInfo?.email,
+            message: 'Confirm order',
+            order: orderData,
+         },
+         config
+      )
+      dispatch({ type: MAIL_SEND_SUCCESS, payload: data })
+   } catch (error) {
+      // Handle error if sending mail fails
+      dispatch({ type: MAIL_SEND_FAILURE, payload: error.message })
    }
 }

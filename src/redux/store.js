@@ -24,6 +24,7 @@ import {
 } from './reducers/Orders'
 
 import { categoryListReducer } from './reducers/Category'
+import { couponListReducer, couponApplyReducer } from './reducers/Coupon'
 
 const reducer = combineReducers({
    productList: getProductListReducer,
@@ -43,6 +44,9 @@ const reducer = combineReducers({
    orderDetails: orderDetailsReducer,
    orderPay: orderPayReducer,
    orderListMy: orderListMyReducer,
+
+   couponList: couponListReducer,
+   applyCoupon: couponApplyReducer,
 
    sendMail: sendMailReducer,
 })
