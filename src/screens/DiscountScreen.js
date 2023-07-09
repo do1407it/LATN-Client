@@ -8,7 +8,7 @@ import moment from 'moment'
 const DiscountSreen = () => {
    const dispatch = useDispatch()
    const { coupon, loading, error } = useSelector((state) => state.couponList)
-
+   const today = new Date()
    useEffect(() => {
       dispatch(listCoupon())
    }, [dispatch])
@@ -40,11 +40,14 @@ const DiscountSreen = () => {
                                  Expiration Date:
                                  {moment(item?.expirationDate).format('DD/MM/YYYY')}
                               </p>
+                              {console.log(Date)}
                               <p>Count In Stock: {item?.countInStock}</p>
-                              {item?.countInStock > 0 ? (
-                                 <button onClick={() => handleApply(item)}>Apply</button>
-                              ) : (
+                              {console.log(item?.expirationDate)}
+                              {item?.countInStock <= 0 ||
+                              new Date(item?.expirationDate) <= new Date() ? (
                                  <button disabled>Apply</button>
+                              ) : (
+                                 <button onClick={() => handleApply(item)}>Apply</button>
                               )}
                            </div>
                         </div>

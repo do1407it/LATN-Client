@@ -80,9 +80,13 @@ const OrderScreen = ({ match }) => {
                               <h5>
                                  <strong>Customer</strong>
                               </h5>
-                              <p>Admin Doe</p>
+                              <p>{order?.user?.name}</p>
                               <p>
                                  <a href={`mailto:admin@example.com`}>{order?.user?.email}</a>
+                              </p>
+                              <p>{order?.user?.phone}</p>
+                              <p>
+                                 <Link to={`/profile/${order?.user?._id}`}>View Profile</Link>
                               </p>
                            </div>
                         </div>

@@ -30,7 +30,7 @@ const PlaceOrderScreen = ({ history }) => {
       Number(cart.itemsPrice ?? 0) +
       Number(cart.shippingPrice ?? 0) +
       Number(cart.taxPrice ?? 0) -
-      Number(coupon?.discount ? cart.itemsPrice * (coupon.discount / 100) : 0)
+      Number(coupon?.discount ? cart?.itemsPrice * (coupon?.discount / 100) : 0)
 
    useEffect(() => {
       if (!userInfo) {
@@ -65,8 +65,9 @@ const PlaceOrderScreen = ({ history }) => {
                         <h5>
                            <strong>Customer</strong>
                         </h5>
-                        <p>{userInfo?.name ?? 'N/A'}</p>
-                        <p>{userInfo?.email ?? 'N/A'}</p>
+                        <p>user: {userInfo?.name ?? 'N/A'}</p>
+                        <p>email: {userInfo?.email ?? 'N/A'}</p>
+                        <p>number: {userInfo?.phone ?? 'N/A'}</p>
                      </div>
                   </div>
                </div>
@@ -134,7 +135,7 @@ const PlaceOrderScreen = ({ history }) => {
                              </div>
                              <div className='mt-3 mt-md-0 col-md-2 col-6 align-items-end  d-flex flex-column justify-content-center '>
                                 <h4>SUBTOTAL</h4>
-                                <h6>${item.qty * item.price}</h6>
+                                <h6>${item?.qty * item?.price}</h6>
                              </div>
                           </div>
                        ))}
@@ -166,7 +167,14 @@ const PlaceOrderScreen = ({ history }) => {
                            <td>
                               <strong>Discount</strong>
                            </td>
-                           <td>{coupon?.code}</td>
+                           <td>
+                              {coupon?.code}
+                              {coupon?.code && (
+                                 <button onClick={() => dispatch({ type: 'COUPON_APPLY_RESET' })}>
+                                    No use coupon
+                                 </button>
+                              )}
+                           </td>
                         </tr>
                         <tr>
                            <td>
