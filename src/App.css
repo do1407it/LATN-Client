@@ -170,7 +170,7 @@ textarea:focus {
 .shopBack img {
    width: 100%;
    height: 250px;
-   object-fit: contain;
+   object-fit: cover;
 }
 .shoptext {
    padding-top: 10px;
@@ -284,7 +284,7 @@ textarea:focus {
    margin-bottom: 50px;
 }
 .single-image {
-   background-color: #f3fbf7;
+   /* background-color: #f3fbf7; */
    margin-right: 20px;
    height: 700px;
    display: flex;
@@ -419,7 +419,7 @@ textarea:focus {
 .author-card-avatar img {
    width: 100px;
    height: 100px;
-   object-fit: contain;
+   object-fit: cover;
    border-radius: 100px;
    margin-top: -60%;
    box-shadow: 0px 0px 27px 0px rgba(0, 0, 0, 0.377);
@@ -570,6 +570,12 @@ textarea:focus {
 }
 /* FOOTER */
 .footer {
+   position: fixed;
+   width: 100%;
+   bottom: 0;
+   right: 0;
+   left: 0;
+   z-index: 999;
    background-color: #ececec;
 }
 .card-name {
@@ -628,7 +634,9 @@ textarea:focus {
 .order-product img {
    width: 100%;
    height: 100px;
-   object-fit: contain;
+   object-fit: cover;
+   border-radius: 5px;
+   marin-right: 10px;
 }
 .table-bordered {
    background-color: #f3f3f3;
@@ -657,4 +665,43 @@ textarea:focus {
 .center-text {
    display: flex;
    justify-content: center !important;
+}
+
+/* Banner */
+.slideshow-container {
+   position: relative;
+   height: 100vh;
+   overflow: hidden;
+   z-index: 999999999999;
+}
+
+.slide {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-size: cover;
+   background-position: center;
+   opacity: 0;
+   transition: opacity 1s ease-in-out;
+}
+
+.slide.active {
+   opacity: 1;
+}
+.scroll-down-btn {
+   position: absolute;
+   bottom: 20px;
+   left: 50%;
+   transform: translateX(-50%);
+   width: 30px;
+   height: 30px;
+   border: 1px solid #fff;
+   border-radius: 100px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   cursor: pointer;
+   animation: scrollDown 1s infinite;
 }

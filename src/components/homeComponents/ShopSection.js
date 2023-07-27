@@ -14,7 +14,7 @@ const ShopSection = ({ keyword, pageNumber }) => {
 
    const { loading, error, products } = useSelector((state) => state.productList)
    const { categories } = useSelector((state) => state.categoryList)
-   console.log(products)
+  
    useEffect(() => {
       dispatch(listProducts(keyword, pageNumber, category))
       dispatch(listCategories())

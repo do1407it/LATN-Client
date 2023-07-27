@@ -9,6 +9,8 @@ import { removeAllCartItems } from '../redux/actions/CartActions'
 import { useHistory } from 'react-router-dom'
 
 const Header = () => {
+   window.scrollTo(0, 920)
+
    const [keyword, setKeyword] = useState()
    const history = useHistory()
    const dispatch = useDispatch()
@@ -20,7 +22,6 @@ const Header = () => {
    }
    const submitHandler = (e) => {
       e.preventDefault()
-
       if (keyword) {
          history.push(`/search/${keyword}`)
       } else {

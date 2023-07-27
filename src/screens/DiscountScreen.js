@@ -30,7 +30,12 @@ const DiscountSreen = () => {
                <div className='row'>
                   {coupon &&
                      coupon.map((item) => (
-                        <div className='col-md-4 center'>
+                        <div
+                           className='col-md-4 center'
+                           style={{
+                              marginBottom: '30px',
+                           }}
+                        >
                            <div>
                               <p>Code name: {item?.code}</p>
                               <h5>

@@ -174,7 +174,7 @@ const SingleProduct = ({ history, match }) => {
                            </div>
                            <div className='my-3'>
                               <button className='col-1 round-black-btn border-0 p-3 rounded text-white'>
-                                 ĐĂNG BÀI
+                                 COMMENT
                               </button>
                            </div>
                         </form>
