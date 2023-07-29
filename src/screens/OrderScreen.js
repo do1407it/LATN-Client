@@ -101,7 +101,7 @@ const OrderScreen = ({ match }) => {
                            </div>
                            <div className='col-md-8 center'>
                               <h5>
-                                 <strong>Order info</strong>
+                                 <strong>Order inffo</strong>
                               </h5>
                               <p>Shipping: {order?.shippingAddress?.country}</p>
                               <p>Pay method: {order?.paymentMethod}</p>
